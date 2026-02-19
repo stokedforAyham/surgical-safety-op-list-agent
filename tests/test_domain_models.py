@@ -10,7 +10,7 @@ def test_evidence_ref_offset_happy_path():
     """Create an EvidenceRef with a valid offset span and verify fields are preserved.
 
     This test ensures that:
-    - EvidenceRef accepts a valid (start_offset, end_offset) 
+    - EvidenceRef accepts a valid (start_offset, end_offset)
         pair where end_offset > start_offset.
     - Parsed fields match the input values.
     - Offsets are typed as integers after validation.
@@ -26,7 +26,7 @@ def test_evidence_ref_offset_happy_path():
         "page": 1,
         "chunk_id": ch_id,
         "start_offset": 10,
-        "end_offset": 20
+        "end_offset": 20,
     }
 
     ref = EvidenceRef(**valid_data)
@@ -36,10 +36,11 @@ def test_evidence_ref_offset_happy_path():
     assert ref.start_offset == 10
     assert isinstance(ref.start_offset, int)
 
+
 def test_evidence_ref_flase_offset():
     """Reject an EvidenceRef where end_offset is not greater than start_offset.
 
-    EvidenceRef enforces a non-empty, forward span for offsets. 
+    EvidenceRef enforces a non-empty, forward span for offsets.
     This test validates that:
     - Providing end_offset <= start_offset raises a Pydantic ValidationError.
     - The error message includes the expected invariant explanation.
@@ -50,13 +51,14 @@ def test_evidence_ref_flase_offset():
         "page": 1,
         "chunk_id": uuid4(),
         "start_offset": 30,
-        "end_offset": 20
+        "end_offset": 20,
     }
 
     with pytest.raises(ValidationError) as exc_info:
         EvidenceRef(**invalid_data)
 
     assert "end_offset (20) must be > start_offset (30)" in str(exc_info.value)
+
 
 def test_artifact_created_at_is_utc_aware():
     """Ensure Artifact.created_at is timezone-aware and in UTC.
@@ -72,15 +74,16 @@ def test_artifact_created_at_is_utc_aware():
         artifact_id=uuid4(),
         filename="test.pdf",
         mime_type="application/pdf",
-        created_at=expected_time
+        created_at=expected_time,
     )
-    
+
     # This proves to the linter it is a datetime
     assert isinstance(artifact.created_at, datetime)
 
     assert artifact.created_at is not None
-    assert artifact.created_at.tzinfo is not None # type: ignore
-    assert artifact.created_at.tzinfo == timezone.utc # type: ignore
+    assert artifact.created_at.tzinfo is not None  # type: ignore
+    assert artifact.created_at.tzinfo == timezone.utc  # type: ignore
+
 
 def test_case_state_prepopulates_all_items():
     """Verify CaseState.items is initialized with all ItemKey entries.
@@ -91,7 +94,7 @@ def test_case_state_prepopulates_all_items():
     - The number of entries equals the number of defined ItemKeys.
     """
     case = CaseState(case_id=uuid4())
-    
+
     assert len(case.items) > 0
 
     for key in ItemKey:
