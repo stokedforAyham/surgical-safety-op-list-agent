@@ -3,7 +3,8 @@ from uuid import uuid4
 
 import pytest
 from pydantic import ValidationError
-from src.oplist_agent.domain.models import Artifact, CaseState, EvidenceRef, ItemKey
+
+from oplist_agent.domain.entities import Artifact, CaseState, EvidenceRef, ItemKey
 
 
 def test_evidence_ref_offset_happy_path():
