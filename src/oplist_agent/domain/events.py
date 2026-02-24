@@ -20,7 +20,7 @@ class EventType(str, Enum):
     CASE_CREATED = "case_created"
     ARTIFACT_ADDED = "artifact_added"
     ARTIFACT_TOGGLED = "artifact_toggled"
-    #EVIDENCE_MAPPED = "evidence_mapped"
+    # EVIDENCE_MAPPED = "evidence_mapped"
     ITEM_STATE_UPDATED = "item_state_updated"
 
 
